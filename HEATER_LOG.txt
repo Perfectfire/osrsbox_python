@@ -1,0 +1,41 @@
+Night 1:
+{
+    INfo
+    {
+	Location
+	{
+		BP
+	}
+	TIME
+	{
+		START: 3:14 AM 11/6/2017
+		End:   6:12 AM 11/6/2017
+		Total: 2.97 Hrs / 178.2 Min
+	}
+	Setting
+	{
+		MODE: Low
+	}
+    }	
+}
+
+Night 2:
+{
+    INfo
+    {
+	Location
+	{
+		BP
+	}
+	TIME
+	{
+		START: 9:30 PM 11/6/2017
+		End:   
+		Total: 
+	}
+	Setting
+	{
+		MODE: Low
+	}
+    }	
+}

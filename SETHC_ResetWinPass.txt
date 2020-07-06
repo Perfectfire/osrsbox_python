@@ -1,0 +1,1 @@
+copy /y c:\sethc.exe c:\windows\system32\sethc.exe

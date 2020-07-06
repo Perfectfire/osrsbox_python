@@ -1,0 +1,118 @@
+Small Single Heater : {	
+   tank1: {
+	Cost: $23 (Tank Exchange, Lowes)
+	Setting: Low
+
+	Session1: {	
+		Runtime: 50 Minutes @ 12:30 AM 10/30/2017
+		Runtime: Still Running @ 1:25 AM 10/30/2017
+		Total: 1.75 Hours
+		Runtime: Still Running @ 3:24 AM 10/30/2017
+		Total: 224 min / 3.733333333333333 Hrs
+		Runtime: Still Running @ 4:01 AM 10/30/2017
+		Total: 254 min 
+		Runtime: Stopped @ 4:30 am 10/30/2017
+		Runtime: 6:28 PM 10/30/2017 10 minutes
+		Total: 264 minutes / 4.4 hrs
+	}
+
+	Session2: {
+		Start: 8:40 PM 10/30/2017
+		Runtime: Still Running @ 8:59 PM 10/30/2017
+		Runtime: Still Running @ 10:01 PM 10/30/2017
+		Runtime: Still Running @ 10:27 PM 10/30/2017
+		Total: 1h 47min
+		Runtime: Still Running @ 11:54 PM 10/30/2017
+		Total: 194m / 3.23h
+		Runtime: Still Running @ 12:51 AM 10/31/2017
+                Total: 251m / 4.183h
+		Runtime: Still Running @ 1:29 AM 10/31/2017
+		Total: 289m / 4.82h
+		Runtime: Still Running @ 2:13 AM 10/31/2017
+		Total: 333m / 5.55h
+		Runtime: Still Running @ 3:00 AM 10/31/2017
+                Total: 380m / 6.33h
+                Runtime: Still Running @ 5:32 AM 10/31/2017
+		Total: 532m / 8.87h
+                Runtime: Still Running @ 6:23 AM 10/31/2017 [STOPPED AT THIS TIME]
+		End: 583m / 9.72h
+		Total: 9.72h
+		
+		
+		
+	}
+	Session3: {
+		Start: 6:25 PM 10/31/2017
+		Runtime: Still Running @ 11:54 PM 10/31/2017
+		Total: 390m / 6.5h
+                Runtime: Still Running @ 2:30 AM 11/1/2017
+		Runtime: Still RUnning @ 3:36 AM 11/1/2017
+		Runtime: Still RUnning @ 4:25 AM 11/1/2017
+		Runtime: Still RUnning @ 5:30 AM 11/1/2017
+		End: 6:52 AM 11/1/2017
+		Total: 732m / 12.2h
+	}
+	Session4: {
+		Start: 12:21 AM 11/2/2017
+		Runtime: Still Running @ 1:42 AM 11/2/2017
+		Total: 
+		End: 7:17 AM 11/2/2017
+		Total: 416m / 6.93h
+	}
+
+	CumulativeSessionTotal: 33.25h as of 5:25 PM 11/2/2017
+
+	Session5: {
+		Start: 1:50 AM 11/3/2017
+		Runtime: Still Running @ 1:50 AM 11/3/2017
+		Runtime: Still Running @ 4:29 AM 11/3/2017
+		Total: 2h 40m
+		End: 
+		Total: 160m / 2.67h
+	}
+	CumulativeSessionTotal: 35.92h as of 4:30 AM 11/3/2017
+
+   }
+
+
+   tank2: {
+	Cost: $20 (Tank Exchange, BP)
+	Setting: High
+
+	Session1: {	
+		Start: 2:02 AM 11/4/2017
+		Still Running @ 4:38 AM 11/4/2017
+		End: 4:50 AM 11/4/2017
+		Total: minutes / hrs
+	}
+
+	Setting: Low
+
+	Session1: {	
+		Start: 3:55 PM 11/4/2017
+		Still Running @ 
+		End: 5:36 PM 11/4/2017
+		Start: 6:26 PM 11/4/2017
+		Still Running @ 8:51 PM 11/4/2017
+		End: 9:30 PM 11/4/2017
+		Total: minutes / hrs
+		Start: 11:43 PM 11/4/2017
+	}STOPPED at 6:46 AM 11/5/2017
+
+   }
+
+
+
+
+}
+
+Medium Double Heater: {
+   tank1: {
+	Cost: $?
+	Setting: Low
+	
+	Session1: {
+		
+	}
+   }
+}

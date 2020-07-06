@@ -1,0 +1,9 @@
+KEY:
+982bf8e57f5c259924e858b081a4519d
+
+
+KEY_SECRET:
+Uociv9WOf1bWwVjut/auGw7b3rrig7k8Nvf/+HYRr+fXUq0rZII5NdCx1UQPI1otgmk323LvGpAvAQ3yEs6dng==
+
+
+Permissions: view, trade, manage, transfer, bypass-2fa

@@ -1,0 +1,9 @@
+Newegg Gigabyte 750W PSUs RMA #'s
+
+------
+A (No Longer Turning On):
+	RMA# = 75577320
+
+------
+B (Clicking Noise):
+	RMA# = 75577780

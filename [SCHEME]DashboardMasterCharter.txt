@@ -1,0 +1,94 @@
+======================================================
+PROJECT_INFO
+------------------------
+ProjectName=ORGZDASH
+
+
+GENERAL_PLAN
+------------------------
+1| Define purpose of project (big reason why)
+
+To create an internal personal dashboard that will save time.
+	
+	
+2| Define goals of project (what will project make easier?)
+
+	>100% OpenSource
+	>100% Migratable (to closed source / alternative choices)
+
+	>Automate ORGZ files: no more "remembering" regular things
+		>TicketSystem for TODO
+		>HTML Bookmarks
+		>Schedule/Time Tracker
+		>Budget Tracker
+		>PasswordKeeper
+		>PC_Status: Backups, FileLocations
+		>Food: Status, Recipies
+		>eBay Management
+		>
+
+	>Learn how to use technologies implemented (Resume worthy)
+
+	>Maintain Security
+	>Maintain Data Storage
+	>
+3| Define applications of technologies required (types of technologies needed)
+	>Database storage
+	>Web hosting
+	>File Serving
+	>
+	>
+4| Choose technologies best suited (what technologies to choose?)
+
+	>For Database	-	-MySQL5.0
+	>For Web		-Apache2.3
+		\Style		-CSS3.0
+		\Frame		-HTML5.0
+		\Scripting	-PHP4.0
+
+	>For Management	-	-Drupal
+				-PHPMyAdmin
+
+	
+
+	>For File	-	-CENTOS
+		\Proto		-NFS/CIFS
+		\Int		-ISCSI
+		\
+	>For Security	-	-PFSENSE
+	>For Cloud	-	-OpenStack
+
+
+5| Plan data --> technology implementation
+6| Execute
+
+======================================================
+LEARN: GOOGLE SEARCHES
+------------------------
+%TODO%
+Drupal Vs LAMP
+PHPmyAdmin
+
+
+
+======================================================
+ORDER_OF_OPERATIONS_TODO
+------------------------
+1|      CREATE ENVIRONMENT
+        >Get OpenVPN working for 192.168.98.0/24
+                +Route from 192.168.98.0/24 to 192.168.99.0/24
+                +Route from 192.168.98.0/24 to 192.168.90.0/24
+                +Route from 192.168.99.0/24 to 192.168.90.0/24
+
+2|      >Install XENSERVER on AMD_X4
+                +Prep/config XENSERVER
+
+3|      >Create CENT_OS VM0<ORACLE_SQLSERVER>
+                +Prep/config
+        >Create CENT_OS VM1<APACHE_WEBSERVER>
+                +Prep/config
+                
+4|      >View test webpage index.php
+        `       +Test SQL, PHP, HTML5 samples
+        
+5|      >Paste web content into /var/www/* on WEBSERVER

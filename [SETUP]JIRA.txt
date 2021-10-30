@@ -1,0 +1,190 @@
+#Setup JIRA on LINUX:
+https://confluence.atlassian.com/display/JIRA/Installing+JIRA+on+Linux
+
+#Setup MYSQL for JIRA:
+https://confluence.atlassian.com/display/JIRA/Connecting+JIRA+to+MySQL
+#-->Extra Help: https://confluence.atlassian.com/display/JIRA/JIRA+and+MySQL
+#Reset JIRA Setup Wizard:
+https://confluence.atlassian.com/display/JIRA/Restarting+JIRA+from+the+Setup+Wizard
+
+CENTOS6.5
+VMWARE VERSION 10
+User=jiraadmin
+Pass=testing
+VM_NAME=JIRA0
+#Processors=1
+#CPUs=2
+RAM=2048MB
+Networking=Bridged
+SCSI=LSI Logic
+DiskType=SCSI
+DiscSize=40GB
+##
+vi /etc/sysconfig/network
+-->     HOSTNAME=jira0
+vi /etc/hosts
+-->     192.168.99.159  jira0
+#PFSENSE ROUTER --> add static DHCP
+        # MAC = 00:0C:29:2F:A0:1B
+        # IP = 192.168.99.59
+        # HOSTNAME = jira0
+chkconfig iptables off
+chkconfig ip6tables off
+vi /etc/selinux/config
+-->     SELUNIX=disabled
+reboot
+#login as root:testing
+cd /home/jiraadmin/Downloads
+wget http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.2.6-x64.bin
+chmod a+x atlassian-jira-6.2.6-x64.bin
+./atlassian-jira-6.2.6-x64.bin
+#VMWARE($TAKE_SNAPSHOT="beforeJIRA")
+-->Install JIRA?        [OK]
+-->AdvancedInstall      [1]
+#data{  HTTP Port = 8080
+        RMI Port  = 8005
+        [X] Install As Service
+        Installation Directory=/opt/atlassian/jira
+        Home Directory=/var/atlassian/application-data/jira
+     }
+#access at http://localhost:8080 || http://192.1689.99.159:8080
+yum install -y mysql mysql-server
+chkconfig mysqld on
+service mysqld start
+#set root password: /usr/bin/mysql_secure_installation or /usr/bin/mysqladmin -u root -h jira0 password 'new-password'
+mysql_secure_installation
+-->     Current root password: [enter (none)]
+-->     Set Password = testing
+-->     Remove Anonymous users? Y
+-->     Disallow root login remotely? N
+-->     Remove Test database? Y
+-->     Reload privilege tables now? Y
+mysql -p'testing'
+CREATE USER 'jiradbadmin'@'192.168.99.159' IDENTIFIED BY 'testing';
+CREATE DATABASE jiradb CHARACTER SET utf8 COLLATE utf8_bin;
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX on jiradb.* TO 'jiradbadmin'@'192.168.99.159' IDENTIFIED BY 'testing';
+FLUSH PRIVILEGES;
+exit
+mysql -u jiradbadmin -h 192.168.99.159 -p'testing'
+SHOW GRANTS FOR jiradbadmin@192.168.99.159;    #verify permissions for jiradbadmin
+#don't need this: yum install -y mysql-connector-java
+service mysqld stop
+vi /etc/my.cnf
+--> Add:
+        bind-address=0.0.0.0
+        port=3306
+        character-set-server=utf8
+        collation-server=utf8_bin
+        default-storage-engine=INNODB
+        max_allowed_packet=32M
+service mysqld start
+#Visit http://dev.mysql.com/downloads/connector/j --> Platform Independent --> Download "No Thanks, Start Download"
+# Use FTP --> send to VM
+tar -zxf mysql-connector-java-5.1.31.tar.gz
+cd mysql-connector-java-5.1.31
+cp mysql-connector-java-5.1.31-bin.jar /opt/atlassian/jira/lib/mysql-connector-java-5.1.31-bin.jar
+/etc/init.d/jira stop
+/etc/init.d/jira start
+--> Visit http://192.168.99.159:8080/
+-->     [X] My Own Database     --> Next
+-->     MYSQL, host=192.168.99.159, port=3306, database=jiradb, username=jiradbadmin, password=testing --> Next
+#VMWARE($TAKE_SNAPSHOT="beforeBaseURL")
+Application Title: InternalJIRA
+Mode = Private
+Base URL = http://192.168.99.159:8080
+--> [X] I have account, no Key --> Login using JIRA Account
+--> Set up Admin Account
+--> Name="Joseph Kodos" Email="perfectfireiii@gmail.com" Username=Perfectfire, Password=PASS1
+Configure Email Notifications [Later]
+[Finish]
+http://192.168.99.159:8080/secure/Dashboard.jspa
+#VMWARE($TAKE_SNAPSHOT="JIRA_RUNNING")
+#Setup MYSQL for CONFLUENCE:
+#https://confluence.atlassian.com/display/DOC/Database+Setup+For+MySQL
+#Install Confluence:
+#https://confluence.atlassian.com/display/DOC/Installing+Confluence+on+Linux
+mysql -p'testing'
+CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;
+GRANT ALL PRIVILEGES ON confluence.* TO 'confdbadmin'@'192.168.99.159' IDENTIFIED BY 'testing';
+exit
+cd /home/jiraadmin/Downloads
+wget http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.5.2-x64.bin
+chmod a+x atlassian-confluence-5.5.2-x64.bin
+./atlassian-confluence-5.5.2-x64.bin
+Install Confluence [OK]
+[2] Custom Install
+Install Dir = /opt/atlassian/confluence
+Home Dir = /var/atlassian/application-data/confluence
+Ports = HTTP:8090;Control:8000;
+Run As Service? Y
+Access at http://localhost:8090
+#Return --> "SETUP MYSQL FOR CONFLUENCE"
+--> Setup Direct JDBC Connection
+cd /home/jiraadmin/Downloads/mysql-connector-java-5.1.31
+cp mysql-connector-java-5.1.31-bin.jar /opt/atlassian/confluence/confluence/WEB-INF/lib/mysql-connector-java-5.1.31-bin.jar
+#For troubleshooting help: https://confluence.atlassian.com/display/CONFKB/Known+Issues+for+MySQL
+#More Troubleshooting: http://serverfault.com/questions/89955/unable-to-connect-to-mysql-through-jdbc-connector-through-tomcat-or-externally
+#Visit https://confluence.atlassian.com/display/DOC/Confluence+Setup+Guide
+/etc/init.d/confluence restart
+--> Visit HTTP://192.168.99.159:8090
+--> Run Setup [Generate License Key]
+--> MYSQL
+--> Setup Database
+Driver Class Name: com.mysql.jdbc.Driver
+Database URL=jdbc:mysql://192.168.99.159/confluence?sessionVariables=storage_engine%3DInnoDB&useUnicode=true&characterEncoding=utf8
+Username=confdbadmin
+Password=testing
+Load Content --> Example Site
+[Connect to JIRA]
+#VMWARE($TAKE_SNAPSHOT="beforeConnectToJira")
+JIRA_Base_URL = http://192.168.99.159:8080
+JIRA Admin Login { User=Perfectfire | Pass=PASS1 }
+CONFLUENCE_Base_URL = http://192.168.99.159:8090
+userGroups=jira-users
+adminGroups=jira-administrators
+Next-->
+FurtherConfig --> Login
+#Under JIRA Dashboard --> Try Agile!
+Generate eval license key [X]
+#VMWARE($TAKE_SNAPSHOT="SetupComplete;JIRA+AGILE+CONFLUENCE")
+-->Reindex()
+
+#Stop JIRA and Confluence and provide context path
+#See https://confluence.atlassian.com/display/JIRAKB/User+is+Constantly+Logged+out+of+JIRA
+/etc/init.d/jira stop
+/etc/init.d/confluence stop
+vi /opt/atlassian/jira/conf/server.xml
+--> <Context path="/jira" 
+vi /opt/atlassian/confluence/conf/server.xml
+--> <Context path="/confluence" 
+/etc/init.d/jira start
+/etc/init.d/confluence start
+--> NEW URL: http://192.168.99.159:8080/jira
+--> NEW URL: http://192.168.99.159:8080/confluence
+--> Update JIRA Base URL (in settings)
+--> Update Confluence Base URL (in settings)
+
+#Configure Datasource: https://confluence.atlassian.com/display/DOC/Configuring+a+MySQL+Datasource+in+Apache+Tomcat
+# JIRA and MYSQL Notes: https://confluence.atlassian.com/display/JIRA/JIRA+and+MySQL
+#Reconfigure: https://confluence.atlassian.com/display/JIRA/Using+the+JIRA+Configuration+Tool
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
